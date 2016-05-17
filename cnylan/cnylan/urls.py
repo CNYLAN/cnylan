@@ -25,20 +25,20 @@ urlpatterns = [
     # Home page
     url(r'^$', lan.views.homepage, name='homepage'),
 
-    # Register Form
-    url(r'^register/', lan.views.register, name='register'),
+    # Previous LANs
+    url(r'^previous-lans/', lan.views.previous_lans, name='previous-lans'),
 
     # About
-    url(r'^thank-you/', lan.views.about, name='about'),
+    url(r'^about/', lan.views.about, name='about'),
 
     # Gallery
-    url(r'^thank-you/', lan.views.gallery, name='gallery'),
+    url(r'^gallery/', lan.views.gallery, name='gallery'),
 
     # Completed purchase page
     url(r'^thank-you/', lan.views.register_complete),
 
     # Admin
-    url(r'^admin/', admin.site.urls),    
+    url(r'^admin/', admin.site.urls),
 
 ]
 

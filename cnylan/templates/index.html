@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% block head_title %}Home{% endblock %}
 
+{% block jumbotron %}
+
+        <div class="container jumbotron">
+            <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center"><strong>{{ homepage.heading }}</strong></h3>
+                <h3 class="text-center">{{ homepage.subheading }}</h4>
+    </div>
+    </div>
+    </div>
+{% endblock jumbotron %}
 
 
 {% block content %}
@@ -12,90 +23,36 @@
 {% block event %}
 
 <div class="container">
+    <div class="row">
+        <div class="col-md-12">
 
-  <div class="content-margins">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-      <h3>{{ homepage.featured_event.event_name }}</h3>
-      </div>
-      <p class="panel-body"><strong>Location:</strong> {{ homepage.featured_event.location }}</br>
-      <strong>Start Time:</strong> {{ homepage.featured_event.start_date }}</br>
-      <strong>End Time:</strong> {{ homepage.featured_event.end_date }}</br>
-      <strong>Cost:</strong> {{ homepage.featured_event.ticket_cost }}</br>
-      <strong>Details:</strong> {{ homepage.featured_event.details }}</p>
+          <div class="panel panel-default">
+            <div class="panel-heading panel-heading-custom">
+              <h3>Upcoming: {{ homepage.featured_event.event_name }}</h3>
+            </div>
+              <div class="panel-body">
+              <p><strong>Location:</strong> {{ homepage.featured_event.location }}</br>
+              <strong>Start Time:</strong> {{ homepage.featured_event.start_date }}</br>
+              <strong>End Time:</strong> {{ homepage.featured_event.end_date }}</br>
+              <strong>Cost:</strong> {{ homepage.featured_event.ticket_cost }}</br>
+              <strong>Details:</strong> {{ homepage.featured_event.details }}
+              </p>
+              <!-- Paypal Button -->
+              <form class="" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+              <input type="hidden" name="cmd" value="_s-xclick">
+              <input type="hidden" name="hosted_button_id" value="2H9ZMVMYPP8FS">
+              <input type="submit" value='Pay Here using Paypal' class='btn btn-success btn-lg'>
+              </form>
+              </div>
 
-      <!-- Paypal Button -->
-      <form class="panel-body" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-      <input type="hidden" name="cmd" value="_s-xclick">
-      <input type="hidden" name="hosted_button_id" value="2H9ZMVMYPP8FS">
-      <input type="submit" value='Pay Here using Paypal' class='btn btn-primary'>
-      <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-      </form>
+         </div>
+    </div>
 
-    
-  </div>
 </div>
-
-
+</div>
  {% endblock event %}
 
-<!-- ======================================-->
 
-<!-- =======================================
-SECOND ROW
-=========================================-->
-{% comment %}
-<div class="container">
-  <div class="content-margins">
-
-      <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">{{ homepage.right_content_heading }}</h2>
-          </div>
-      {% for game in homepage.featured_games.all %}
-      <p class="panel-body">{{ game }}<br/>
-      {% endfor %}
-      </p>
-
-      </div>
-      </div>
-
-</div>
-
-
-<!-- =======================================
-SPONSORS AND PRIZES
-=========================================-->
-
-<div class="container">
-<div class="row">
-<div class="col-md-5 col-md-offset-7">
-  <div class="box">
-<h2>{{ homepage.left_content_heading }}</h2>
-{% for sponsor in homepage.featured_event.sponsors.all %}
-<h3>{{ sponsor.name }}</h3>
-{% for prize in sponsor.prize.all %}
-<ul>
-<li>{{ prize }}</li>
-</ul>
-
-{% endfor %}
-</hr>
-{% endfor %}
-</div>
-</div>
-</div>
-</div>
-<hr/>
-{% endcomment %}
-
-
-<!-- =======================================
-MORE
-=========================================-->
-
-
-<!-- ======================================-->
 
 
 {% endblock content %}

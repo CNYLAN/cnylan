@@ -1,13 +1,18 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.conf import settings
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from django.db import transaction
 
 
 # Create your models here.
+
+class HomePageManager(models.Manager):
+    def create_homepage(self, title):
+        homepage = self.create(homepage_name=title, current_homepage=True)
+        return homepage
 
 class TimeStampedModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -18,23 +23,24 @@ class TimeStampedModel(models.Model):
 
 class HomePage(models.Model):
     current_homepage = models.BooleanField()
-    homepage_name = models.CharField(max_length=25)
+    homepage_name = models.CharField(max_length=35)
     heading = models.CharField(max_length=200,
         help_text="The main heading for the homepage",
         default="Central New York LAN")
     subheading = models.CharField(max_length=200,
         help_text="The subheading just below the heading",
-        default="Next LAN")
+        default="Default subheading")
     featured_event = models.ForeignKey("Event", blank=True, null=True,
         help_text="If selected item from this event will be featured "
                   "on the home page.")
     featured_games = models.ManyToManyField("Game", blank=True,
     	help_text="Games to show on the homepage.")
-
     left_content_heading = models.CharField(max_length=200,
-        default="Sponsors and Prizes")
+        help_text="A heading for left side page content. Not currently Implemented",
+        default="Default Left Heading Title")
     right_content_heading = models.CharField(max_length=200,
-        default="Games Played")
+        help_text="A heading for right side page content. Not currently Implemented",
+        default="Default Right Heading Title")
     # featured_image = ImageField(upload_to=upload_location,
     #     null=True,
     #     blank=True,
@@ -42,6 +48,7 @@ class HomePage(models.Model):
     #     height_field="height_field")
     # width_field = models.IntegerField(default=0)
     # height_field = models.IntegerField(default=0)
+    objects = HomePageManager()
 
     class Meta:
         verbose_name = _("Home page")
@@ -115,9 +122,10 @@ class Sponsor(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 class Prize(models.Model):
     prize = models.CharField(max_length=100)
 
     def __str__(self):
         return self.prize
+

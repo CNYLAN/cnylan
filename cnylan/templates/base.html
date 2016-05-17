@@ -33,10 +33,10 @@
   <!-- ===========================
         HEADER START
   ================================= -->
- 
+
   <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-    <div class="container">
+      <div class="container">
       <!-- Static navbar -->
         <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -46,46 +46,15 @@
                 <span class="icon-bar"></span>
             </button>
 
-
-            <p class="navbar-brand">August LAN Party Registration is Open - Join NOW!</p>  
-
-
-        </div>
-
-      </nav>
-  </div>
-</div>
-
-
-    <!-- Main component for a primary marketing message or call to action -->
-    {% block jumbotron %}
-
-        <div class="container">
-          <div class="col-sm-12">
-          <h3><strong>{{ homepage.heading }}</strong></h3>
-          <h4>{{ homepage.subheading }}</h4>
-
-          </div>
-
-        </div>
-        <br/>
-
-    {% endblock jumbotron %}
-
-    {% block navbar %}
-            <div class="container">
-      <nav class="navbar-inverse">
-      <div class="navbar-inner">
-
+            <a class="navbar-brand" href="">CNY LAN</a>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
                 <li>
                     <a href="{% url 'homepage' %}">Home</a>
                 </li>
                 <li>
-                    <a href="{% url 'homepage' %}">Lan Party</a>
+                    <a href="{% url 'previous-lans' %}">Previous LANs</a>
                 </li>
                 <li>
                     <a href="{% url 'gallery' %}">Gallery</a>
@@ -95,15 +64,20 @@
                 </li>
             </ul>
         </div>
-
-      </div>
     </div>
+
       </nav>
-    {% endblock navbar %}
-    
+</div>
+
+
+    <!-- Main component for a primary marketing message or call to action -->
+    {% block jumbotron %}
+    {% endblock jumbotron %}
+
+
     {% block content %}
     {% endblock content %}
-    
+
 
     <div class="container">
       <div class="row">
