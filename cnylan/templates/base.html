@@ -34,21 +34,20 @@
         HEADER START
   ================================= -->
 
-  <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-      <div class="container">
-      <!-- Static navbar -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
 
-            <a class="navbar-brand" href="">CNY LAN</a>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="container-fluid">
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+<a class="navbar-brand" href="">CNY LAN</a>
+</div>
+<div class="navbar-collapse collapse">
+ <!-- Collect the nav links, forms, and other content for toggling -->
             <ul class="nav navbar-nav navbar-left">
                 <li>
                     <a href="{% url 'homepage' %}">Home</a>
@@ -63,11 +62,11 @@
                     <a href="{% url 'about' %}">About Us</a>
                 </li>
             </ul>
-        </div>
-    </div>
-
-      </nav>
 </div>
+</div>
+</div>
+
+ 
 
 
     <!-- Main component for a primary marketing message or call to action -->
