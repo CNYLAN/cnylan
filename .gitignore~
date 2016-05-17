@@ -1,4 +1,4 @@
 local_settings.py
 *.pyc
 *.pyo
-db.sqlite
+db.sqlite3
