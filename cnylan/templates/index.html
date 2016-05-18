@@ -7,17 +7,13 @@
 {% block jumbotron %}
 <div class="container">
 
-  <div class="jumbotron" style={% if homepage.image %}"background-image:url('{{ homepage.image.url }}');"{% else %}""{% endif %}>
+<div class="jumbotron" style={% if homepage.image %}"background-image:url('{{ homepage.image.url }}'); height:450px;"{% else %}""{% endif %}>
 {% if not homepage.image %}
 <div class="row">
 <div class="col-md-12">
 <h2 class="text-center">{{ homepage.heading }}</h2>
 <h4 class="text-center">{{ homepage.subheading }}</h4>
-<h4 class="text-center"></h4>
-<h4 class="text-center"></h4>
-<h4 class="text-center"></h4>
-<h4 class="text-center"></h4>
-<h4 class="text-center"></h4>
+
 {% endif %}
 
 </div>
