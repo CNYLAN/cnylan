@@ -1,20 +1,38 @@
 {% extends "base.html" %}
+
+{% load thumbnail %}
+
 {% block head_title %}Home{% endblock %}
 
 {% block jumbotron %}
+<div class="container">
 
-        <div class="container jumbotron">
-            <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center"><strong>{{ homepage.heading }}</strong></h3>
-                <h3 class="text-center">{{ homepage.subheading }}</h4>
-    </div>
-    </div>
-    </div>
+  <div class="jumbotron" style={% if homepage.image %}"background-image:url('{{ homepage.image.url }}');"{% else %}""{% endif %}>
+{% if not homepage.image %}
+<div class="row">
+<div class="col-md-12">
+<h2 class="text-center">{{ homepage.heading }}</h2>
+<h4 class="text-center">{{ homepage.subheading }}</h4>
+<h4 class="text-center"></h4>
+<h4 class="text-center"></h4>
+<h4 class="text-center"></h4>
+<h4 class="text-center"></h4>
+<h4 class="text-center"></h4>
+{% endif %}
+
+</div>
+
+</div>
+  </div>
+</div>
+
+
+
 {% endblock jumbotron %}
 
 
 {% block content %}
+
 
 <!-- =======================================
      FIRST ROW
@@ -34,14 +52,15 @@
               <p><strong>Location:</strong> {{ homepage.featured_event.location }}</br>
               <strong>Start Time:</strong> {{ homepage.featured_event.start_date }}</br>
               <strong>End Time:</strong> {{ homepage.featured_event.end_date }}</br>
-              <strong>Cost:</strong> {{ homepage.featured_event.ticket_cost }}</br>
-              <strong>Details:</strong> {{ homepage.featured_event.details }}
+              <strong>Cost:</strong> {{ homepage.featured_event.ticket_cost }}<br/>
+              <strong>Details:</strong><br/> {{ homepage.featured_event.details }}<br/>
+              <strong>Sponsors - Prizes:</strong><br/>{% for sponsor in homepage.featured_event.sponsors.all %}<span>{{ sponsor }} - {% for prize in sponsor.prize.all %} {{ prize }}{% if forloop.last %} {% else %},{% endif %} </span>{% endfor %} <br/>{% endfor %}<br/>
               </p>
               <!-- Paypal Button -->
               <form class="" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
               <input type="hidden" name="cmd" value="_s-xclick">
               <input type="hidden" name="hosted_button_id" value="2H9ZMVMYPP8FS">
-              <input type="submit" value='Pay Here using Paypal' class='btn btn-success btn-lg'>
+              <input type="submit" value='Pay Here with Paypal' class='btn btn-success btn-lg'>
               </form>
               </div>
 
