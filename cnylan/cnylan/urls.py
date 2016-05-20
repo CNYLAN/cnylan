@@ -17,25 +17,49 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-
-import lan.views
+"""
+from lan.views import homepage, previous_lans, about, register_complete, gallery
 
 urlpatterns = [
 
     # Home page
-    url(r'^$', lan.views.homepage, name='homepage'),
+    url(r'^$', homepage, name='homepage'),
 
     # Previous LANs
-    url(r'^previous-lans/', lan.views.previous_lans, name='previous-lans'),
+    url(r'^previous-lans/', previous_lans, name='previous-lans'),
 
     # About
-    url(r'^about/', lan.views.about, name='about'),
+    url(r'^about/', about, name='about'),
 
     # Gallery
-    url(r'^gallery/', lan.views.gallery, name='gallery'),
+    url(r'^gallery/', gallery, name='gallery'),
 
     # Completed purchase page
-    url(r'^thank-you/', lan.views.register_complete),
+    url(r'^thank-you/', register_complete),
+
+    # Admin
+    url(r'^admin/', admin.site.urls),
+
+]
+"""
+from lan.views import HomePageView, PreviousLansView, AboutPageView, GalleryView, RegisterCompleteView
+
+urlpatterns = [
+
+    # Home page
+    url(r'^$', HomePageView.as_view(), name='homepage'),
+
+    # Previous LANs
+    url(r'^previous-lans/', PreviousLansView.as_view(), name='previous-lans'),
+
+    # About
+    url(r'^about/', AboutPageView.as_view(), name='about'),
+
+    # Gallery
+    url(r'^gallery/', GalleryView.as_view(), name='gallery'),
+
+    # Completed purchase page
+    url(r'^thank-you/', RegisterCompleteView.as_view()),
 
     # Admin
     url(r'^admin/', admin.site.urls),

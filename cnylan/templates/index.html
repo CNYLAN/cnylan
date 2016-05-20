@@ -6,15 +6,9 @@
 
 {% block jumbotron %}
 <div class="container">
-
-<div class="jumbotron" style={% if homepage.image %}"background-image:url('{{ homepage.image.url }}'); height:450px;"{% else %}""{% endif %}>
-{% if not homepage.image %}
-<div class="row">
-<div class="col-md-12">
 <h2 class="text-center">{{ homepage.heading }}</h2>
 <h4 class="text-center">{{ homepage.subheading }}</h4>
-
-{% endif %}
+  <div class="jumbotron" style="{% if homepage.image %}background-image:url('{{ homepage.image.url }}'); height:350px;{% endif %}">
 
 </div>
 
@@ -37,38 +31,40 @@
 {% block event %}
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
 
-          <div class="panel panel-default">
-            <div class="panel-heading panel-heading-custom">
-              <h3>Upcoming: {{ homepage.featured_event.event_name }}</h3>
-            </div>
-              <div class="panel-body">
-              <p><strong>Location:</strong> {{ homepage.featured_event.location }}</br>
-              <strong>Start Time:</strong> {{ homepage.featured_event.start_date }}</br>
-              <strong>End Time:</strong> {{ homepage.featured_event.end_date }}</br>
-              <strong>Cost:</strong> {{ homepage.featured_event.ticket_cost }}<br/>
-              <strong>Details:</strong><br/> {{ homepage.featured_event.details }}<br/>
-              <strong>Sponsors - Prizes:</strong><br/>{% for sponsor in homepage.featured_event.sponsors.all %}<span>{{ sponsor }} - {% for prize in sponsor.prize.all %} {{ prize }}{% if forloop.last %} {% else %},{% endif %} </span>{% endfor %} <br/>{% endfor %}<br/>
-              </p>
-              <!-- Paypal Button -->
-              <form class="" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-              <input type="hidden" name="cmd" value="_s-xclick">
-              <input type="hidden" name="hosted_button_id" value="2H9ZMVMYPP8FS">
-              <input type="submit" value='Pay Here with Paypal' class='btn btn-success btn-lg'>
-              </form>
-              </div>
+  <div class="row">
 
-         </div>
+    <div class="col-md-4">
+
+        <h2 class="text-center">Next LAN</h2>
+          <p class="text-center lead">{{ homepage.featured_event.event_name }}</p>
+          <p class="text-center"><strong>Location:</strong> {{ homepage.featured_event.location }}</p>
+          <p class="text-center"><strong>Start Time:</strong> {{ homepage.featured_event.start_date }}</p>
+          <p class="text-center"><strong>End Time:</strong> {{ homepage.featured_event.end_date }}</p>
+          <p class="text-center"><strong>Cost:</strong> {{ homepage.featured_event.ticket_cost }}</p>
+          <!-- Paypal Button -->
+
+          {% comment %}
+          <p class=""> {{ homepage.featured_event.details }}</p>
+          {% endcomment %}
+
     </div>
-
-</div>
+    <div class="col-md-4">
+      <h2 class="text-center">LAN Details</h2>
+      <p class=""> {{ homepage.featured_event.details }}</p>
+    </div>
+    <div class="col-md-4">
+      <h2 class="text-center">Pay Here</h2>
+        <form class="text-center" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="2H9ZMVMYPP8FS">
+        <input type="submit" value='Submit with Paypal - {{ homepage.featured_event.ticket_cost }}' class='btn btn-success btn-lg'>
+        </form>
+        <p class="text-center">You will be directed to Paypal to make the payment</p>
+    </div>
+  </div>
 </div>
  {% endblock event %}
-
-
-
 
 {% endblock content %}
 
