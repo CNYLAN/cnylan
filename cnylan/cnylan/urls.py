@@ -14,25 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-"""
-from lan.views import homepage, previous_lans, about, register_complete, gallery
+
+from lan.views import homepage, about, register_complete
 
 urlpatterns = [
 
     # Home page
     url(r'^$', homepage, name='homepage'),
 
-    # Previous LANs
-    url(r'^previous-lans/', previous_lans, name='previous-lans'),
+    url(r'^', include("lan.urls", namespace='lan')),
 
     # About
     url(r'^about/', about, name='about'),
 
-    # Gallery
-    url(r'^gallery/', gallery, name='gallery'),
 
     # Completed purchase page
     url(r'^thank-you/', register_complete),
@@ -65,7 +62,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
 ]
-
+"""
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,4 +1,3 @@
-"""
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,6 +11,8 @@ def homepage(request):
         homepage = HomePage.objects.create_homepage("Automatically Created Homepage")
     context = {
             "homepage": homepage,
+            "image": homepage.image,
+
     }
     return render(request, "index.html", context)
 
@@ -28,11 +29,11 @@ def gallery(request):
     context = { }
     return render(request, "gallery.html", context)
 
-def previous_lans(request):
+def previous(request):
     context = { }
     return render(request, "previous-lans.html", context)
-"""
 
+"""
 from django.views.generic import DetailView, ListView, TemplateView
 from django.utils import timezone
 
@@ -74,3 +75,4 @@ class GalleryView(TemplateView):
 
 class PreviousLansView(TemplateView):
     template_name = 'previous-lans.html'
+"""

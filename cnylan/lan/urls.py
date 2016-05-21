@@ -1,16 +1,14 @@
-"""
-lan URL Configuration
+from django.conf.urls import url
 
-"""
-from django.conf.urls import  url
-
-from .views import homepage, event_list, event_detail, games_list, sponsors
+from lan.views import previous, gallery
 
 urlpatterns = [
-    #url(r'^$', homepage, name='homepage'),
-    #url(r'^/register/', register, name='register'),
-    #url(r'^event/$', event_list, name='event_list'),
-    #url(r'^event/?(P<slug>[\w-]+)/$', event_detail, name='event_detail'),
-    #url(r'^sponsors/$', sponsors, name='sponsors'),
-    #url(r'^games/$', games_list, name='games_list'),
+    # Previous LANs
+    url(r'^previous/', previous, name='previous'),
+    # Gallery
+    url(r'^gallery/', gallery, name='gallery'),
+    # Left these for examples
+    # url(r'^(?P<slug>[\w-]+)/$', post_list, name='detail'),
+    # url(r'^(?P<slug>[\w-]+)/edit/$', post_update, name='update'),
+    # url(r'^(?P<slug>[\w-]+)/delete/$', post_delete),
 ]

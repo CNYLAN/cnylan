@@ -48,19 +48,24 @@ class HomePage(models.Model):
         null=True,
         blank=True,
         width_field="width_field",
-        height_field="height_field")
+        height_field="height_field",
+        help_text="This is where you would select an image for a banner or jumbotron. \
+                   I haven't built this into the Html so it wouldn't show up anywhere right now.")
     width_field = models.IntegerField(default=0)
     height_field = models.IntegerField(default=0)
     featured_event = models.ForeignKey("Event", blank=True, null=True,
         help_text="If selected item from this event will be featured "
                   "on the home page.")
     featured_games = models.ManyToManyField("Game", blank=True,
-    	help_text="Games to show on the homepage.")
+        help_text="Games to show on the homepage.")
     left_content_heading = models.CharField(max_length=200,
-        help_text="A heading for left side page content. Not currently Implemented",
+        help_text="A heading for left side page content",
+        default="Default Middle Heading Title")
+    middle_content_heading = models.CharField(max_length=200,
+        help_text="A heading for left side page content",
         default="Default Left Heading Title")
     right_content_heading = models.CharField(max_length=200,
-        help_text="A heading for right side page content. Not currently Implemented",
+        help_text="A heading for left side page content",
         default="Default Right Heading Title")
     # featured_image = ImageField(upload_to=upload_location,
     #     null=True,
@@ -77,14 +82,14 @@ class HomePage(models.Model):
 
     @transaction.atomic
     def save(self, *args, **kwargs):
-    	"""
-    	Checks to see if any other HomePage objects current_homepage
-    	is set to True. If one is, it will change the current object to True
-    	and the other object to False.
+        """
+        Checks to see if any other HomePage objects current_homepage
+        is set to True. If one is, it will change the current object to True
+        and the other object to False.
 
-    	transaction.atomic decorator protects the atomicity of the database
-    	see django docs for more detail
-    	"""
+        transaction.atomic decorator protects the atomicity of the database
+        see django docs for more detail
+        """
         if self.current_homepage:
             HomePage.objects.filter(
                 current_homepage=True).update(current_homepage=False)
@@ -106,7 +111,7 @@ class Event(TimeStampedModel):
     location = models.CharField(max_length=100)
     details = models.TextField()
     ticket_cost = models.CharField(max_length=100)
-    sponsors = models.ManyToManyField("Sponsor")
+    sponsors = models.ManyToManyField("Sponsor", blank=True)
 
 # This uses Mezzanine's FileField - maybe i will copy?
 #    featured_image = FileField(verbose_name=_("Featured Image"),
@@ -130,16 +135,13 @@ class Event(TimeStampedModel):
 
 class Game(models.Model):
     name = models.CharField(max_length=50)
-    #homepage = models.ForeignKey("HomePage", blank=True, null=True)
-#    featured_image = FileField(verbose_name=_("Featured Image"),
-#        upload_to=upload_to("blog.BlogPost.featured_image", "blog"),
-#        format="Image", max_length=255, null=True, blank=True)
+
     def __str__(self):
         return self.name
 
 class Sponsor(models.Model):
     name = models.CharField(max_length=100)
-    prize = models.ManyToManyField("Prize")
+    prize = models.ManyToManyField("Prize", blank=True)
 
     def __str__(self):
         return self.name
@@ -149,4 +151,3 @@ class Prize(models.Model):
 
     def __str__(self):
         return self.prize
-
