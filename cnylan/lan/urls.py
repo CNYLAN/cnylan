@@ -5,7 +5,7 @@ from lan.views import previous, gallery
 urlpatterns = [
     # Previous LANs
     url(r'^previous/', previous, name='previous'),
-    # Gallery
+    # Gallery - not implemented
     url(r'^gallery/', gallery, name='gallery'),
     # Left these for examples
     # url(r'^(?P<slug>[\w-]+)/$', post_list, name='detail'),

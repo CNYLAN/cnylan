@@ -18,52 +18,26 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from lan.views import homepage, about, register_complete
+from lan.views import homepage, information, contact
 
 urlpatterns = [
 
     # Home page
     url(r'^$', homepage, name='homepage'),
 
+    # Include lan app
     url(r'^', include("lan.urls", namespace='lan')),
 
     # About
-    url(r'^about/', about, name='about'),
+    url(r'^infomation/', information, name='information'),
 
-
-    # Completed purchase page
-    url(r'^thank-you/', register_complete),
-
-    # Admin
-    url(r'^admin/', admin.site.urls),
-
-]
-"""
-from lan.views import HomePageView, PreviousLansView, AboutPageView, GalleryView, RegisterCompleteView
-
-urlpatterns = [
-
-    # Home page
-    url(r'^$', HomePageView.as_view(), name='homepage'),
-
-    # Previous LANs
-    url(r'^previous-lans/', PreviousLansView.as_view(), name='previous-lans'),
-
-    # About
-    url(r'^about/', AboutPageView.as_view(), name='about'),
-
-    # Gallery
-    url(r'^gallery/', GalleryView.as_view(), name='gallery'),
-
-    # Completed purchase page
-    url(r'^thank-you/', RegisterCompleteView.as_view()),
+    # Completed purchase page - not implemented
+    url(r'^contact/', contact, name='contact'),
 
     # Admin
     url(r'^admin/', admin.site.urls),
 
 ]
-"""
-
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

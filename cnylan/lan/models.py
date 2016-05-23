@@ -15,12 +15,14 @@ class HomePageManager(models.Manager):
         return homepage
 
 def upload_location(instance, filename):
-    #filebase, extension = filename.split(".")
-    #return "%s/%s.%s" %(instance.id, instance.id, extension)
-    HomePageModel = instance.__class__
-    new_id = HomePage.objects.order_by("id").last().id + 1
     """
-    instance.__class__ gets the model Post. We must use this method because the model is defined below.
+    defines an upload location for images for the HomePage. 
+    Will be served to /media/filename.extension
+    """
+    HomePageModel = instance.__class__
+    new_id = HomePageModel.objects.order_by("id").last().id + 1
+    """
+    instance.__class__ gets the model HomePage. We must use this method because the model is defined below.
     Then create a queryset ordered by the "id"s of each object,
     Then we get the last object in the queryset with `.last()`
     Which will give us the most recently created Model instance
@@ -29,6 +31,10 @@ def upload_location(instance, filename):
     return "%s/%s" %(new_id, filename)
 
 class TimeStampedModel(models.Model):
+    """
+    Abstract model for created and updated fields. Most models have a created and updated field to
+    track objects over time
+    """
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -36,6 +42,11 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 class HomePage(models.Model):
+    """
+    Main HomePage object. It's useful to build in the HomePage in the back end. Although it does contrict the
+    front end designer to specific fields. This would be more useful if requirements for homepage were defined nicely.
+    Therefore, you may have to edit html directly. Although, this isn't ideal.
+    """
     current_homepage = models.BooleanField(help_text="Click here if you want this page to be the current home page",)
     homepage_name = models.CharField(max_length=35)
     heading = models.CharField(max_length=200,
@@ -44,36 +55,25 @@ class HomePage(models.Model):
     subheading = models.CharField(max_length=200,
         help_text="The subheading just below the heading",
         default="Default subheading")
-    image = ImageField(upload_to=upload_location,
-        null=True,
-        blank=True,
-        width_field="width_field",
-        height_field="height_field",
-        help_text="This is where you would select an image for a banner or jumbotron. \
-                   I haven't built this into the Html so it wouldn't show up anywhere right now.")
-    width_field = models.IntegerField(default=0)
-    height_field = models.IntegerField(default=0)
+    banner_image = models.ImageField(upload_to=upload_location,
+                    null=True,
+                    blank=True,
+                    help_text="Banner Image")
     featured_event = models.ForeignKey("Event", blank=True, null=True,
         help_text="If selected item from this event will be featured "
                   "on the home page.")
     featured_games = models.ManyToManyField("Game", blank=True,
         help_text="Games to show on the homepage.")
-    left_content_heading = models.CharField(max_length=200,
+    first_content_heading = models.CharField(max_length=200,
         help_text="A heading for left side page content",
         default="Default Middle Heading Title")
-    middle_content_heading = models.CharField(max_length=200,
+    second_content_heading = models.CharField(max_length=200,
         help_text="A heading for left side page content",
         default="Default Left Heading Title")
-    right_content_heading = models.CharField(max_length=200,
+    third_content_heading = models.CharField(max_length=200,
         help_text="A heading for left side page content",
         default="Default Right Heading Title")
-    # featured_image = ImageField(upload_to=upload_location,
-    #     null=True,
-    #     blank=True,
-    #     width_field="width_field",
-    #     height_field="height_field")
-    # width_field = models.IntegerField(default=0)
-    # height_field = models.IntegerField(default=0)
+
     objects = HomePageManager()
 
     class Meta:
@@ -104,7 +104,33 @@ class HomePage(models.Model):
         """
         return reverse("lan:homepage", kwargs={})
 
+class HomePageImage(models.Model):
+    """
+    This Foreign keys to HomePage in order to set up multiple images on the homepage.
+    related_name set to "images". Refer to object in views as HomePage.images.all()
+    for a specific HomePage object
+    """
+    homepage = models.ForeignKey(HomePage, related_name='images')
+    image = models.ImageField(upload_to=upload_location,
+                        null=True,
+                        blank=True,
+                        width_field="width_field",
+                        height_field="height_field",
+                        help_text="This is where you would select an image for a banner or jumbotron. \
+                                   I haven't built this into the Html so it wouldn't show up anywhere right now.")
+    width_field = models.IntegerField(default=0)
+    height_field = models.IntegerField(default=0)
+    label = models.CharField(max_length=50)
+
+
 class Event(TimeStampedModel):
+    """
+    Creates an event object to track specific events. 
+    Will be useful for looking back at previous lan objects.
+    For example, could have a previous lan page and a template 
+    could iterate over each object or a subset of objects to display
+    previous lan data
+    """
     event_name = models.CharField(max_length=100)
     start_date = models.DateTimeField(_("Event Start Date"))
     end_date  = models.DateTimeField(_("Event End Date"))
@@ -113,10 +139,6 @@ class Event(TimeStampedModel):
     ticket_cost = models.CharField(max_length=100)
     sponsors = models.ManyToManyField("Sponsor", blank=True)
 
-# This uses Mezzanine's FileField - maybe i will copy?
-#    featured_image = FileField(verbose_name=_("Featured Image"),
-#        upload_to=upload_to("blog.BlogPost.featured_image", "blog"),
-#        format="Image", max_length=255, null=True, blank=True)
     class Meta:
         verbose_name = _("Event")
         verbose_name_plural = _("Events")
@@ -128,7 +150,7 @@ class Event(TimeStampedModel):
 
     #def get_absolute_url(self):
     #    """
-    #    absolute url
+    #    absolute url not set
     #    """
     #    return reverse("lan:event_detail", kwargs={"slug": self.slug})
 

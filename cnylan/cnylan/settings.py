@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # Third party
-    'sorl.thumbnail',
+    # Third party apps - not implemented now, useful though
+    #'sorl.thumbnail',
 
     # myapps
     'lan',
