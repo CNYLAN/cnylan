@@ -1,7 +1,0 @@
-local_settings.py
-*.pyc
-*.pyo
-db.sqlite3
-*.*~
-cnylan/lan/migrations
-static/
